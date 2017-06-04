@@ -1,0 +1,66 @@
+⁠<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script>
+
+var dogecoinCoin = {"id":"dogecoin", "count":"41897"}
+var byteCoin = {"id":"bytecoin-bcn", "count":"45662"}
+var reddCoin  = {"id":"reddcoin", "count":"501573"}
+var fedoraCoin  = {"id":"fedoracoin", "count":"7111031"}
+var EspersCoin  = {"id":"espers", "count":"340227"}
+var Infinitecoin  = {"id":"infinitecoin", "count":"206482"}
+var Mintcoin  = {"id":"mintcoin", "count":"435174"}
+var Mooncoin  = {"id":"mooncoin", "count":"1100157"}
+var btc_prise = 0.0
+
+var coinsArray = new Array(dogecoinCoin,byteCoin,reddCoin,fedoraCoin,EspersCoin,Infinitecoin,Mintcoin,Mooncoin);
+ $(document).ready(function(){
+    
+   var index = 0 ;var usdSum = 0.0; var inrSum = 0.0  
+for (index = 0; index < coinsArray.length; ++index) {
+    var api_url = "https://api.coinmarketcap.com/v1/ticker/"+coinsArray[index].id+"/?convert=INR"
+       $.ajax({url: api_url, success: function(result){
+        usdSum = usdSum +  parseFloat(result[0].price_usd) *  parseFloat(coinsArray[index].count)
+        inrSum = inrSum +  parseFloat(result[0].price_inr) *  parseFloat(coinsArray[index].count)
+    }, failure: function(result){
+		alert('failed');
+            $("#div1").html(result);
+        }
+       ,async: false
+        });    
+ }
+  // Check claculate #BTC
+
+ var displayStr = "Rs : "  + parseInt(inrSum) + "<br/> " + "USD : " + parseInt(usdSum);
+ var no_btc = "#BTC : " + usdSum/btc_prise
+  $("#div1").html(displayStr);  
+ $("#div2").html(no_btc);  
+ 
+
+});
+</script>
+</head>
+<body>
+<div  class="w3-container w3-light-grey" style="border:none; height:100px; width: 250px;" scrolling='no' frameborder='0' allowTransparency='true'>
+     <div  id="div1" style="font-size:20px;"></div>
+ </div>
+
+<div  class="w3-container w3-blue-grey" style="border:none; height:100px; width: 250px;" scrolling='no' frameborder='0' allowTransparency='true'>
+     <div  id="div2" style="font-size:10px;"></div>
+ </div>
+ 
+<a href="https://www.coingecko.com/en/price_charts/dogecoin/inr" target="_blank"><img alt="dogecoin price" src="https://www.coingecko.com/en/widget_component/ticker/dogecoin/inr.jpg"></a>
+<a href="https://www.coingecko.com/en/price_charts/bytecoin/inr" target="_blank"><img alt="bytecoin price" src="https://www.coingecko.com/en/widget_component/ticker/bytecoin/inr.jpg"></a>
+<a href="https://www.coingecko.com/en/price_charts/reddcoin/inr" target="_blank"><img alt="reddcoin price" src="https://www.coingecko.com/en/widget_component/ticker/reddcoin/inr.jpg"></a>
+<a href="https://www.coingecko.com/en/price_charts/fedoracoin/inr" target="_blank"><img alt="fedoracoin price" src="https://www.coingecko.com/en/widget_component/ticker/fedoracoin/inr.jpg"></a>
+<a href="https://www.coingecko.com/en/price_charts/espers/inr" target="_blank"><img alt="espers price" src="https://www.coingecko.com/en/widget_component/ticker/espers/inr.jpg"></a>
+<a href="https://www.coingecko.com/en/price_charts/infinitecoin/inr" target="_blank"><img alt="infinitecoin price" src="https://www.coingecko.com/en/widget_component/ticker/infinitecoin/inr.jpg"></a>
+<a href="https://www.coingecko.com/en/price_charts/mintcoin/inr" target="_blank"><img alt="mintcoin price" src="https://www.coingecko.com/en/widget_component/ticker/mintcoin/inr.jpg"></a>
+<a href="https://www.coingecko.com/en/price_charts/mooncoin/inr" target="_blank"><img alt="mooncoin price" src="https://www.coingecko.com/en/widget_component/ticker/mooncoin/inr.jpg"></a>
+
+</body>
+</html>
+
