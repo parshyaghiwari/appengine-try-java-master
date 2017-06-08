@@ -1,66 +1,418 @@
-⁠<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<script>
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>TheCoinBank</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+ 
+ <script>
 
-var dogecoinCoin = {"id":"dogecoin", "count":"41897"}
-var byteCoin = {"id":"bytecoin-bcn", "count":"45662"}
-var reddCoin  = {"id":"reddcoin", "count":"501573"}
-var fedoraCoin  = {"id":"fedoracoin", "count":"7111031"}
-var EspersCoin  = {"id":"espers", "count":"340227"}
-var Infinitecoin  = {"id":"infinitecoin", "count":"206482"}
-var Mintcoin  = {"id":"mintcoin", "count":"435174"}
-var Mooncoin  = {"id":"mooncoin", "count":"1100157"}
-var btc_prise = 0.0
+ var dogecoinCoin = {"id":"dogecoin", "count":"41897"}
+ var byteCoin = {"id":"bytecoin-bcn", "count":"45662"}
+ var reddCoin  = {"id":"reddcoin", "count":"501573"}
+ var fedoraCoin  = {"id":"fedoracoin", "count":"7111031"}
+ var EspersCoin  = {"id":"espers", "count":"340227"}
+ var Infinitecoin  = {"id":"infinitecoin", "count":"206482"}
+ var Mintcoin  = {"id":"mintcoin", "count":"435174"}
+ var Mooncoin  = {"id":"mooncoin", "count":"1100157"}
+ var Cagecoin  = {"id":"cagecoin", "count":"5544444"}
+ var Popularcoin  = {"id":"popularcoin", "count":"2192747"}
+ var btc_prise = 0.0
 
-var coinsArray = new Array(dogecoinCoin,byteCoin,reddCoin,fedoraCoin,EspersCoin,Infinitecoin,Mintcoin,Mooncoin);
- $(document).ready(function(){
-    
-   var index = 0 ;var usdSum = 0.0; var inrSum = 0.0  
-for (index = 0; index < coinsArray.length; ++index) {
-    var api_url = "https://api.coinmarketcap.com/v1/ticker/"+coinsArray[index].id+"/?convert=INR"
-       $.ajax({url: api_url, success: function(result){
-        usdSum = usdSum +  parseFloat(result[0].price_usd) *  parseFloat(coinsArray[index].count)
-        inrSum = inrSum +  parseFloat(result[0].price_inr) *  parseFloat(coinsArray[index].count)
-    }, failure: function(result){
-		alert('failed');
-            $("#div1").html(result);
-        }
-       ,async: false
-        });    
- }
+ var coinsArray = new Array(dogecoinCoin,byteCoin,reddCoin,fedoraCoin,EspersCoin,Infinitecoin,Mintcoin,Mooncoin,Cagecoin,Popularcoin);
+  $(document).ready(function(){
+     $("#headerINR").prepend('&#8377;');
+    var index = 0 ;var usdSum = 0.0; var inrSum = 0.0  
+ for (index = 0; index < coinsArray.length; ++index) {
+     var api_url = "https://api.coinmarketcap.com/v1/ticker/"+coinsArray[index].id+"/?convert=INR"
+    	 $.ajax({url: api_url, success: function(result){
+         usdSum = usdSum +  parseFloat(result[0].price_usd) *  parseFloat(coinsArray[index].count)
+         inrSum = inrSum +  parseFloat(result[0].price_inr) *  parseFloat(coinsArray[index].count)
+         $("#"+coinsArray[index].id+"Amount").prepend('&#8377;');
+		 $("#"+coinsArray[index].id+"Count").html('#'+coinsArray[index].count);
+         $("#"+coinsArray[index].id+"Price").html('&#8377;'+" "+result[0].price_inr);
+         $("#"+coinsArray[index].id+"Amount").html('&#8377;'+" "+(result[0].price_inr)*parseFloat(coinsArray[index].count));
+         
+     }, failure: function(result){
+ 		alert('failed');
+             $("#div1").html(result);
+         }
+        ,async: false
+         });    
+  }
+  
+  var displayStr = "Rs : "  + parseInt(inrSum) + "<br/> " + "USD : " + parseInt(usdSum);
+ var no_btc = "#BTC : " + usdSum/btc_prise
+  $("#headerINR").html('&#8377;'+" "+Math.ceil(parseFloat(inrSum)));
+  document.getElementById('totalINR').value = Math.ceil(parseFloat(inrSum));
+ $("#usd").html('&#36;'+" "+Math.ceil(parseFloat(usdSum)));
+  
+});
+
+function seeCont() {
+var tINR = document.getElementById('totalINR').value;
+var indexx = 0; 
+ for (indexx = 0; indexx < coinsArray.length; ++indexx) {
+     var api_url = "https://api.coinmarketcap.com/v1/ticker/"+coinsArray[indexx].id+"/?convert=INR"
+    	 $.ajax({url: api_url, success: function(result){
+         $("#"+coinsArray[indexx].id+"Cont").html('&#8721;'+" "+Math.floor(((((result[0].price_inr)*parseFloat(coinsArray[indexx].count))*100)/parseInt(tINR))));
+     }, failure: function(result){
+ 		alert('failed');
+             $("#div1").html(result);
+         }
+        ,async: false
+         });    
+  }
   // Check claculate #BTC
 
- var displayStr = "Rs : "  + parseInt(inrSum) + "<br/> " + "USD : " + parseInt(usdSum);
- var no_btc = "#BTC : " + usdSum/btc_prise
-  $("#div1").html(displayStr);  
- $("#div2").html(no_btc);  
- 
-
-});
+}
 </script>
-</head>
-<body>
-<div  class="w3-container w3-light-grey" style="border:none; height:100px; width: 250px;" scrolling='no' frameborder='0' allowTransparency='true'>
-     <div  id="div1" style="font-size:20px;"></div>
- </div>
-
-<div  class="w3-container w3-blue-grey" style="border:none; height:100px; width: 250px;" scrolling='no' frameborder='0' allowTransparency='true'>
-     <div  id="div2" style="font-size:10px;"></div>
- </div>
  
-<a href="https://www.coingecko.com/en/price_charts/dogecoin/inr" target="_blank"><img alt="dogecoin price" src="https://www.coingecko.com/en/widget_component/ticker/dogecoin/inr.jpg"></a>
-<a href="https://www.coingecko.com/en/price_charts/bytecoin/inr" target="_blank"><img alt="bytecoin price" src="https://www.coingecko.com/en/widget_component/ticker/bytecoin/inr.jpg"></a>
-<a href="https://www.coingecko.com/en/price_charts/reddcoin/inr" target="_blank"><img alt="reddcoin price" src="https://www.coingecko.com/en/widget_component/ticker/reddcoin/inr.jpg"></a>
-<a href="https://www.coingecko.com/en/price_charts/fedoracoin/inr" target="_blank"><img alt="fedoracoin price" src="https://www.coingecko.com/en/widget_component/ticker/fedoracoin/inr.jpg"></a>
-<a href="https://www.coingecko.com/en/price_charts/espers/inr" target="_blank"><img alt="espers price" src="https://www.coingecko.com/en/widget_component/ticker/espers/inr.jpg"></a>
-<a href="https://www.coingecko.com/en/price_charts/infinitecoin/inr" target="_blank"><img alt="infinitecoin price" src="https://www.coingecko.com/en/widget_component/ticker/infinitecoin/inr.jpg"></a>
-<a href="https://www.coingecko.com/en/price_charts/mintcoin/inr" target="_blank"><img alt="mintcoin price" src="https://www.coingecko.com/en/widget_component/ticker/mintcoin/inr.jpg"></a>
-<a href="https://www.coingecko.com/en/price_charts/mooncoin/inr" target="_blank"><img alt="mooncoin price" src="https://www.coingecko.com/en/widget_component/ticker/mooncoin/inr.jpg"></a>
+ 
+ 
+  <style>
+  body {
+      font: 400 15px Lato, sans-serif;
+      line-height: 1.8;
+      color: #818181;
+  }
+  h2 {
+      font-size: 24px;
+      text-transform: uppercase;
+      color: #303030;
+      font-weight: 600;
+      margin-bottom: 30px;
+  }
+  h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      color: #69BAFF;
+      font-weight: 400;
+      margin-bottom: 15px;
+  }
+
+p {
+      color: #000000;
+  }  
+  .jumbotron {
+      background-color: #f4511e;
+      color: #fff;
+      padding: 100px 25px;
+      font-family: Montserrat, sans-serif;
+  }
+  .container-fluid {
+      padding: 60px 50px;
+  }
+  .bg-grey {
+      background-color: #f6f6f6;
+  }
+  .logo-small {
+      color: #f4511e;
+      font-size: 50px;
+  }
+  .logo {
+      color: #f4511e;
+      font-size: 200px;
+  }
+  .thumbnail {
+      padding: 0 0 15px 0;
+      border: none;
+      border-radius: 0;
+  }
+  .thumbnail img {
+      width: 100%;
+      height: 100%;
+      margin-bottom: 10px;
+  }
+  .carousel-control.right, .carousel-control.left {
+      background-image: none;
+      color: #f4511e;
+  }
+  .carousel-indicators li {
+      border-color: #f4511e;
+  }
+  .carousel-indicators li.active {
+      background-color: #f4511e;
+  }
+  .item h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      font-weight: 400;
+      font-style: italic;
+      margin: 70px 0;
+  }
+  .item span {
+      font-style: normal;
+  }
+  .panel {
+      border: 1px solid #f4511e; 
+      border-radius:0 !important;
+      transition: box-shadow 0.5s;
+  }
+  .panel:hover {
+      box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+  }
+  .panel-footer .btn:hover {
+      border: 1px solid #f4511e;
+      background-color: #fff !important;
+      color: #f4511e;
+  }
+  .panel-heading {
+      color: #fff !important;
+      background-color: #f4511e !important;
+      padding: 25px;
+      border-bottom: 1px solid transparent;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+  }
+  .panel-footer {
+      background-color: white !important;
+  }
+  .panel-footer h3 {
+      font-size: 32px;
+  }
+  .panel-footer h4 {
+      color: #aaa;
+      font-size: 14px;
+  }
+  .panel-footer .btn {
+      margin: 15px 0;
+      background-color: #f4511e;
+      color: #fff;
+  }
+  .navbar {
+      margin-bottom: 0;
+      background-color: #f4511e;
+      z-index: 9999;
+      border: 0;
+      font-size: 12px !important;
+      line-height: 1.42857143 !important;
+      letter-spacing: 4px;
+      border-radius: 0;
+      font-family: Montserrat, sans-serif;
+  }
+  .navbar li a, .navbar .navbar-brand {
+      color: #fff !important;
+  }
+  .navbar-nav li a:hover, .navbar-nav li.active a {
+      color: #f4511e !important;
+      background-color: #fff !important;
+  }
+  .navbar-default .navbar-toggle {
+      border-color: transparent;
+      color: #fff !important;
+  }
+  footer .glyphicon {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #f4511e;
+  }
+  .slideanim {visibility:hidden;}
+  .slide {
+      animation-name: slide;
+      -webkit-animation-name: slide;
+      animation-duration: 1s;
+      -webkit-animation-duration: 1s;
+      visibility: visible;
+  }
+  @keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+  @-webkit-keyframes slide {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      -webkit-transform: translateY(0%);
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .col-sm-4 {
+      text-align: left;
+      margin: 25px 0;
+    }
+    .btn-lg {
+        width: 100%;
+        margin-bottom: 35px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .logo {
+        font-size: 150px;
+    }
+  }
+  </style>
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+<input type="hidden" id="totalINR">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" id="headerINR" href="#myPage">&#8377;</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" onclick="seeCont()">See Contribution</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron text-center" style="padding: 50px; 30px">
+  <p id="inr"></p>
+  <p id="usd" style="color: #fff;">USD : 000000</p>
+  <p>BTC : 000000</p> 
+</div>
+
+<!-- Container (Services Section) -->
+<div id="services" class="container-fluid text-center">
+  <h2>Coins</h2>
+  <br>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+      <h4 style="color: #69BAFF;">ReddCoin</h4>
+      <p  id="reddcoinCount"></p>
+      <p  id="reddcoinPrice"></p>
+      <p  id="reddcoinAmount"></p>
+      <p  id="reddcoinCont"></p>
+    </div>
+    <div class="col-sm-4">
+      <h4>DogeCoin</h4>
+      <p  id="dogecoinCount"></p>
+      <p  id="dogecoinPrice"></p>
+      <p  id="dogecoinAmount"></p>
+      <p  id="dogecoinCont"></p>
+    </div>
+    <div class="col-sm-4">
+      <h4>ByteCoin</h4>
+      <p  id="bytecoin-bcnCount"></p>
+      <p  id="bytecoin-bcnPrice"></p>
+      <p  id="bytecoin-bcnAmount"></p>
+      <p  id="bytecoin-bcnCont"></p>
+    </div>
+  </div>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+      <h4>FedoraCoin</h4>
+      <p  id="fedoracoinCount"></p>
+      <p  id="fedoracoinPrice"></p>
+      <p  id="fedoracoinAmount"></p>
+      <p  id="fedoracoinCont"></p>
+    </div>
+    <div class="col-sm-4">
+      <h4>EspersCoin</h4>
+      <p  id="espersCount"></p>
+      <p  id="espersPrice"></p>
+      <p  id="espersAmount"></p>
+      <p  id="espersCont"></p>
+    </div>
+    <div class="col-sm-4">
+      <h4>InfiniteCoin</h4>
+      <p  id="infinitecoinCount"></p>
+      <p  id="infinitecoinPrice"></p>
+      <p  id="infinitecoinAmount"></p>
+      <p  id="infinitecoinCont"></p>
+    </div>
+  </div>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+      <h4>MintCoin</h4>
+      <p  id="mintcoinCount"></p>
+      <p  id="mintcoinPrice"></p>
+      <p  id="mintcoinAmount"></p>
+      <p  id="mintcoinCont"></p>
+    </div>
+    <div class="col-sm-4">
+      <h4>MoonCoin</h4>
+      <p  id="mooncoinCount"></p>
+      <p  id="mooncoinPrice"></p>
+      <p  id="mooncoinAmount"></p>
+      <p  id="mooncoinCont"></p>
+    </div>
+	<div class="col-sm-4">
+      <h4>Cagecoin</h4>
+      <p  id="cagecoinCount"></p>
+      <p  id="cagecoinPrice"></p>
+      <p  id="cagecoinAmount"></p>
+      <p  id="cagecoinCont"></p>
+    </div>
+    <div class="col-sm-4">
+      <h4>popularcoin</h4>
+      <p  id="popularcoinCount"></p>
+      <p  id="popularcoinPrice"></p>
+      <p  id="popularcoinAmount"></p>
+      <p  id="popularcoinCont"></p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="container-fluid text-center">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+  <p>The Coin</p>
+</footer>
+
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+  
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+})
+</script>
 
 </body>
 </html>
-
