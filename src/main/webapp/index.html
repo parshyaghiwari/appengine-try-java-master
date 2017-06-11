@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,12 +18,12 @@
  var dogecoinCoin = {"id":"dogecoin", "count":"41897"}
  var byteCoin = {"id":"bytecoin-bcn", "count":"45662"}
  var reddCoin  = {"id":"reddcoin", "count":"501573"}
- var fedoraCoin  = {"id":"fedoracoin", "count":"7111031"}
+ var fedoraCoin  = {"id":"fedoracoin", "count":"5100031"}
  var EspersCoin  = {"id":"espers", "count":"340227"}
  var Infinitecoin  = {"id":"infinitecoin", "count":"206482"}
  var Mintcoin  = {"id":"mintcoin", "count":"435174"}
- var Mooncoin  = {"id":"mooncoin", "count":"1100157"}
- var Cagecoin  = {"id":"cagecoin", "count":"5544444"}
+ var Mooncoin  = {"id":"mooncoin", "count":"2006589"}
+ var Cagecoin  = {"id":"cagecoin", "count":"1910662"}
  var Popularcoin  = {"id":"popularcoin", "count":"2192747"}
  var btc_prise = 0.0
 
@@ -37,8 +38,8 @@
          inrSum = inrSum +  parseFloat(result[0].price_inr) *  parseFloat(coinsArray[index].count)
          $("#"+coinsArray[index].id+"Amount").prepend('&#8377;');
 		 $("#"+coinsArray[index].id+"Count").html('#'+coinsArray[index].count);
-         $("#"+coinsArray[index].id+"Price").html('&#8377;'+" "+result[0].price_inr);
-         $("#"+coinsArray[index].id+"Amount").html('&#8377;'+" "+(result[0].price_inr)*parseFloat(coinsArray[index].count));
+         $("#"+coinsArray[index].id+"Price").html('&#8377;'+" "+Math.round(result[0].price_inr *10000)/10000);
+         $("#"+coinsArray[index].id+"Amount").html('&#8377;'+" "+Math.round((result[0].price_inr)*parseFloat(coinsArray[index].count)*1000)/1000);
          
      }, failure: function(result){
  		alert('failed');
@@ -292,74 +293,72 @@ p {
   <h2>Coins</h2>
   <br>
   <div class="row slideanim">
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <h4 style="color: #69BAFF;">ReddCoin</h4>
       <p  id="reddcoinCount"></p>
       <p  id="reddcoinPrice"></p>
       <p  id="reddcoinAmount"></p>
       <p  id="reddcoinCont"></p>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <h4>DogeCoin</h4>
       <p  id="dogecoinCount"></p>
       <p  id="dogecoinPrice"></p>
       <p  id="dogecoinAmount"></p>
       <p  id="dogecoinCont"></p>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <h4>ByteCoin</h4>
       <p  id="bytecoin-bcnCount"></p>
       <p  id="bytecoin-bcnPrice"></p>
       <p  id="bytecoin-bcnAmount"></p>
       <p  id="bytecoin-bcnCont"></p>
     </div>
-  </div>
-  <div class="row slideanim">
-    <div class="col-sm-4">
+  
+    <div class="col-sm-2">
       <h4>FedoraCoin</h4>
       <p  id="fedoracoinCount"></p>
       <p  id="fedoracoinPrice"></p>
       <p  id="fedoracoinAmount"></p>
       <p  id="fedoracoinCont"></p>
     </div>
-    <div class="col-sm-4">
+  <div class="col-sm-2">
       <h4>EspersCoin</h4>
       <p  id="espersCount"></p>
       <p  id="espersPrice"></p>
       <p  id="espersAmount"></p>
       <p  id="espersCont"></p>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <h4>InfiniteCoin</h4>
       <p  id="infinitecoinCount"></p>
       <p  id="infinitecoinPrice"></p>
       <p  id="infinitecoinAmount"></p>
       <p  id="infinitecoinCont"></p>
     </div>
-  </div>
-  <div class="row slideanim">
-    <div class="col-sm-4">
+     <div class="col-sm-2">
       <h4>MintCoin</h4>
       <p  id="mintcoinCount"></p>
       <p  id="mintcoinPrice"></p>
       <p  id="mintcoinAmount"></p>
       <p  id="mintcoinCont"></p>
     </div>
-    <div class="col-sm-4">
+	
+    <div class="col-sm-2">
       <h4>MoonCoin</h4>
       <p  id="mooncoinCount"></p>
       <p  id="mooncoinPrice"></p>
       <p  id="mooncoinAmount"></p>
       <p  id="mooncoinCont"></p>
     </div>
-	<div class="col-sm-4">
+	<div class="col-sm-2">
       <h4>Cagecoin</h4>
       <p  id="cagecoinCount"></p>
       <p  id="cagecoinPrice"></p>
       <p  id="cagecoinAmount"></p>
       <p  id="cagecoinCont"></p>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <h4>popularcoin</h4>
       <p  id="popularcoinCount"></p>
       <p  id="popularcoinPrice"></p>
